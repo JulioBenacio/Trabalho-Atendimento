@@ -38,6 +38,7 @@ public class Main {
                 }
             }while(!dataValida);
                 String cpf; 
+                boolean cpfExiste = false;
             do{
                 System.out.println("Digite o seu CPF: ");
                 cpf =sc.nextLine();
@@ -48,10 +49,20 @@ public class Main {
                 }else if(cpf.length() != 11){
                     System.out.println("CPF deve ter 11 números!");
                 }
+            
+                for (int x =0;x < list.size();x++) {
+                    if(cpf.equals(list.get(x).getCpf())){
+                    cpfExiste=true;
+                    }
+                    if(cpfExiste){
+                    System.out.println("CPF já existente!");
+                    }
+            }
             }while(
                 cpf.isBlank() || 
                 !cpf.matches("\\d+") ||
-                 cpf.length() != 11
+                cpf.length() != 11  ||
+                cpfExiste
             );
                 String telefone;
             do{
