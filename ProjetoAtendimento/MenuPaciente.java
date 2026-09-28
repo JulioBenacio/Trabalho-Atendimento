@@ -55,20 +55,54 @@ public class MenuPaciente {
                                     System.out.println("A especialidade não pode ficar vazia.");
                                     especialidade = sc.nextLine();
                                 }
-
+                                
+                                boolean dataValida = false;
+                                LocalDate data;
+                                do{
                                 System.out.println("Digite a data do agendamento (dd/MM/yyyy):");
                                 String dataDigitada = sc.nextLine();
 
                                 DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                                LocalDate data = LocalDate.parse(dataDigitada, formato);
 
+                                try {
+                                    data = LocalDate.parse(dataDigitada, formato);
+                                    
+                                    if( data.isBefore(LocalDate.now())){
+                                        System.out.println("Data já passou!");
+                                        dataValida= false;
+                                    }else{
+                                        System.out.println("Data valida!");
+                                        dataValida = true;
+                                    }    
+                                } catch (Exception e) {
+                                    System.out.println("Data invalida!");
+                                    dataValida = false;
+                                }
+
+                                }while(!dataValida);
+
+                                boolean horarioValido = false;
+                                LocalTime horario;
+                                do{
                                 System.out.println("Digite o horário do agendamento (HH:mm):");
                                 String horarioDigitado =sc.nextLine();
 
                                 DateTimeFormatter relogio =
                                 DateTimeFormatter.ofPattern("HH:mm");
-                                LocalTime horario =LocalTime.parse(horarioDigitado, relogio);
+                                try {
+                                    horario =LocalTime.parse(horarioDigitado, relogio);
+                                    System.out.println("horário valido!");
+                                    horarioValido = true;
+
+                                } catch (Exception e) {
+                                    System.out.println("horario invalido!");
+                                    horarioValido = false;
+
+                                }
                                 
+                                }while(!horarioValido);
+
+
                                 Agendamento agendamento = new Agendamento(
                                     paciente,
                                     medico,
