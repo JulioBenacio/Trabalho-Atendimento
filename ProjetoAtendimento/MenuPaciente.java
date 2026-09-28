@@ -1,8 +1,12 @@
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MenuPaciente {
-    public static void mostrarMenu(Scanner sc, Paciente paciente){
+    public static void mostrarMenu(Scanner sc, Paciente paciente,ArrayList <Agendamento> agendas){
         int opcao;
 
         do { 
@@ -30,7 +34,76 @@ public class MenuPaciente {
                     break;
             
                 case 2 :
+                    int opcaoAgendamento;
+                    do{
+                        System.out.println("===== AGENDAMENTOS =====");
+                        System.out.println("1 - Novo agendamento");
+                        System.out.println("2 - Meus agendamentos");
+                        System.out.println("0 - Voltar");
 
+                        System.out.println("Escolha uma opção: ");
+                        opcaoAgendamento = sc.nextInt();
+                        sc.nextLine();
+
+                        switch (opcaoAgendamento) {
+                            case 1:
+
+                                System.out.println("Digite a especialidade: ");
+                                String especialidade = sc.nextLine();
+
+                                while (especialidade.isBlank()) {
+                                    System.out.println("A especialidade não pode ficar vazia.");
+                                    especialidade = sc.nextLine();
+                                }
+
+                                System.out.println("Digite a data do agendamento (dd/MM/yyyy):");
+                                String dataDigitada = sc.nextLine();
+
+                                DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                                LocalDate data = LocalDate.parse(dataDigitada, formato);
+
+                                System.out.println("Digite o horário do agendamento (HH:mm):");
+                                String horarioDigitado =sc.nextLine();
+
+                                DateTimeFormatter relogio =
+                                DateTimeFormatter.ofPattern("HH:mm");
+                                LocalTime horario =LocalTime.parse(horarioDigitado, relogio);
+                                
+                                Agendamento agendamento = new Agendamento(
+                                    paciente,
+                                    medico,
+                                    data,
+                                    horario,
+                                    especialidade
+                                );
+
+                                agendas.add(agendamento);
+                                break;
+                        
+                            case 2 :
+
+                                for (int x = 0; x < agendas.size(); x++){
+                                    
+                                    if (agendas.get(x).getPaciente() == paciente){
+                                        System.out.println("===== MEUS AGENDAMENTOS =====");
+                                        System.out.println("especialidade: " + agendas.get(x).getEspecialidade());
+                                        
+                                        System.out.println("Data: " + agendas.get(x).getData());
+                                    
+                                        System.out.println("Horário: " + agendas.get(x).getHorario());
+                                        
+                                    }
+                                }
+
+                                break;
+                        
+                            case 0 :
+
+                                break;
+                            default:System.out.println("Opção invalida!");
+                                break;
+                        }
+                    }while(opcaoAgendamento != 0);
                     break;
 
                 case 3 :

@@ -5,6 +5,7 @@ public class Main {
     public static void main(String[] args) {
         
         ArrayList <Paciente> list = new ArrayList<>();
+        ArrayList <Agendamento> agendas = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
         String resposta;
         int opcao;
@@ -83,7 +84,7 @@ public class Main {
                     }
                 }while(!loginRealizado);
 
-                MenuPaciente.mostrarMenu(sc, paciente);
+                MenuPaciente.mostrarMenu(sc, paciente, agendas);
                 break;
 
             case 0:
